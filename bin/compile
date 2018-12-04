@@ -85,6 +85,13 @@ for dir in $CACHED_DIRS; do
   cp -R $dir $CACHE_DIR/
 done
 
+# Django collectstatic support.
+# The buildpack automatically runs collectstatic for Django applications.
+# This is the cause for the majority of build failures on the Python platform.
+# These failures are intentional — if collectstatic (which can be tricky, at times) fails,
+# your build fails.
+source "$BIN_DIR/steps/collectstatic"
+
 # Set context environment variables.
 set-env PATH '$HOME/.heroku/miniconda/bin:$PATH'
 set-env PYTHONUNBUFFERED true
