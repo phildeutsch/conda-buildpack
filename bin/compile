@@ -11,10 +11,6 @@ set -eo pipefail
 # Prepend proper path for virtualenv hackery. This will be deprecated soon.
 export PATH=:/usr/local/bin:$PATH
 
-# The buildpack ships with a few executable tools (e.g. pip-grep, etc).
-# This installs them into the path, so we can execute them directly.
-export PATH=$PATH:$ROOT_DIR/vendor/:$ROOT_DIR/vendor/pip-pop
-
 # Paths.
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
@@ -22,6 +18,10 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 
 CACHED_DIRS=".heroku"
+
+# The buildpack ships with a few executable tools (e.g. pip-grep, etc).
+# This installs them into the path, so we can execute them directly.
+export PATH=$PATH:$ROOT_DIR/vendor/:$ROOT_DIR/vendor/pip-pop
 
 # Static configurations for virtualenv caches.
 PROFILE_PATH="$BUILD_DIR/.profile.d/miniconda.sh"
